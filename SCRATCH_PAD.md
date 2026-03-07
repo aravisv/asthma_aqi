@@ -106,4 +106,66 @@ Coming to the exploratory experiment, I can do below
 
 After getting the AQI data for particular years, there seems to be large number of NA values.
 I dont know how to handle it except deletion, which is not a good idea.
-Hence proceeding to explore handling of missing values
+Hence proceeding to explore handling of missing values.
+
+
+Coming back to this project after doing a detailed basic study of missingness,
+
+Accroding to CPCB, 
+How is AQI calculated? 
+1. The Sub-indices for individual pollutants at a monitoring location are calculated using its 24-hourly average concentration value (8-hourly in case of CO and O3) and health breakpoint concentration range. The worst sub-index is the AQI for that location. 
+2. All the eight pollutants may not be monitored at all the locations. Overall AQI is calculated only if data are available for minimum three pollutants out of which one should necessarily be either PM2.5 or PM10. Else, data are considered insufficient for calculating AQI. Similarly, a minimum of 16 hours’ data is considered necessary for calculating subindex.  
+3. The sub-indices for monitored pollutants are calculated and disseminated, even if data are inadequate for determining AQI. The Individual pollutant-wise sub-index will provide air quality status for that pollutant.  
+4. The web-based system is designed to provide AQI on real time basis. It is an automated system that captures data from continuous monitoring stations without human intervention, and displays AQI based on running average values (e.g. AQI at 6am on a day will incorporate data from 6am on previous day to the current day). 
+5. For manual monitoring stations, an AQI calculator is developed wherein data can be fed manually to get AQI value. 
+
+AQI Calculator (Excel) → https://cpcb.nic.in/upload/national-air-quality-index/AQI-Calculator.xls
+
+Started exploring missing data in the AQI dataset
+Dropped some of the columns and cities which are not relevant to calculate the AQI, and with huge number of missing values
+
+Reflection : 
+How could I have sped up the exploratory analysis of data?
+Since i dont know python and pandas much, I keep asking claude for the code
+It gives code, I execute after checking it
+If the results are not what I expect, I reframe the prompt one more time and get the right answer
+Further upon executing a command and seeing a pattern, I have to deep dive and go in a more granular level
+This cannot be foreseen before, unless I have domain expertise or have done similar projects before
+
+
+Recalculated AQI and the bucket using the formula. Because for some rows the AQI was not calculated. 
+And I wanted the AQI score and formula used to be consistent.
+It was a good decision, since the AQI scores differed for some rows hugely.
+
+we can impute the missing values. but given that the health data of asthma patients is only for 2 years, imputation efforts would be not worth it
+because finally we will just have 2 yearly data points, so any statistical test and inference we do will not be significant
+hence continuing with some aggregations of the yearly indicators' data
+
+first lets create function to calculate AQI, then replace the AQI score and AQI bucket columns, since we dont know which formula was used in calculating
+to maintain consistency, its better to recalculate all, although it seems expensive and redundant
+we need to first calculate per day AQI, and then average it over months, seasons, and year
+
+then we can derive new columns such as bad pollution days, winter and summer AQIs etc...
+
+https://www.lung.org/blog/asthma-and-air-pollution
+PM2.5, NO2 - child asthma
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC7503605/ 
+summary table by NotebookLM
+
+| **NO2**  | Causes new-onset asthma. | Children. |
+| --- | --- | --- |
+| **PM2.5** | Causes new-onset and exacerbations. | Children and Elderly. |
+| **Ozone** | Triggers severe exacerbations and hospital visits. | Children and active outdoor adults. |
+| SO2 | Asthma prevalence | Children, especially with atopy |
+
+https://www.sciencedirect.com/science/article/pii/S2659663625000529
+Abstract of the study has the same matching info
+
+We can focus on deriving some aggregates on NO2, PM2.5, Ozone (O3)
+
+Calculated the aggregates - City, Month, Season, Yearly.
+There are lot of combinations of data.
+I think its better to use some visualisation tools rather than the table outputs in jupyter notebook
+
+
