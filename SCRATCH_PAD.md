@@ -166,6 +166,39 @@ We can focus on deriving some aggregates on NO2, PM2.5, Ozone (O3)
 
 Calculated the aggregates - City, Month, Season, Yearly.
 There are lot of combinations of data.
-I think its better to use some visualisation tools rather than the table outputs in jupyter notebook
+I think its better to use some visualisation tools rather than the table outputs in jupyter notebook.
 
+Let us think what plots we can possibly draw
+We have cities, month, seasons, NOx_mean, PM25_mean, O3_mean, AQI_mean, days_very_poor, days_severe.
+And from the health data, we have statewise men & women who have asthma.
 
+I chose PowerBI. But to use it in Macbook, we need to have parallels application or virtual machine.
+Installed UTM virtual machine, booted Windows11 OS via ISO image, created shared folder bw host and virtual.
+Installed PowerBI, imported the aggregated AQI csv files and plotted basic graphs.
+
+There is some learning curve on this tool. But it has many good features.
+Such as in built aggregations, queries, ability to transform the data, different visualisation options, tools.
+I liked the feature ‘Small multple’, which upon applying the graph split into 4 quarters based on the seasons. 
+X axis was city, Y axis was PM2.5 mean. Small multiples was season.
+
+Learnings - 
+If you already have aggregated data and know clearly what to plot, it is better to do in python itself.
+If the data is not aggregated yet, want more transformations and combinations of plots to explore, visualisation tools such as PowerBI are useful.
+
+Conclusion : 
+
+Started the exploratory data analysis of air pollutants and the asthma burden in Indian cities, continued to explore different sources of data, stumbled upon good research papers.
+While searching for the dataset, I realised the scarcity and the quality of good health datasets in India.
+Upon checking the dataset I got for AQI, there were lot of missing values.
+To understand and treat it in a proper way without causing change in distribution, shift in mean and variations, I continued learning about it.
+Understood the different types of missingness such as MCAR, MAR, MNAR on numeric, categorical and time series data.
+Plotted graphs to visualise and checked how to impute it using different techniques.
+Coming back to this project, I realised that while I can treat the missingness in the AQI data, to compare it with the health data, I just had 2 years’ summary on Indian states.
+It is not possible to reach any statistical inference with just two data points at hand.
+If the data asthma patients was available in a granular level, the below inferences or correlations could have checked - 
+Role of different pollutants on asthma, seasons and its effect, cities that have drastic changes in air quality & its impact.
+So far the cleaning and aggregation of AQI data has been done in this Jupyter notebook. 
+I did not continue plotting graphs and understanding the correlations, as I know at this stage this is a typical case of ‘sunk cost fallacy’ :)
+
+Some ideas I had while doing this project (with the assumption that I have all the data I need) - 
+AQI data, Asthma & other respiratory illness, healthcare professionals and facilities available in the locality per population, effect on rural vs urban, whether the govt is building new clinics / hospitals, policy and budget allocation to this domain.
